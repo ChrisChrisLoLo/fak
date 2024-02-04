@@ -2,7 +2,6 @@ let { tap, hold, td, combo, .. } = import "./fak/keycode.ncl" in
 let util = import "./fak/util_functions.ncl" in
 
 let virtual_keys' = [
-  combo.make 30 [12, 13],
 ] in
 
 let key_count = 32 + std.array.length virtual_keys' in
@@ -23,9 +22,9 @@ let ki = {
 } in
 
 let layouts = {
-  QWERTY = "QWERTYUIOPASDFGHJKL;ZXCVBNM,./",
-  DVORAK = "',.PYFGCRLAOEUIDHTNS;QJKXBMWVZ",
-  COLEMAK = "QWFPGJLUY;ARSTDHNEIOZXCVBKM,./",
+  QWERTY = "QWERTYUIOPASDFGHJKLMZXCVBN",
+  DVORAK = "PYFGCRLAOEUIDHTNSQJKXBMWVZ",
+  COLEMAK = "QWFPGJLUYARSTDHNEIOZXCVBKM",
 } in
 
 let make_hrm = fun key_idx =>
@@ -43,7 +42,6 @@ let make_hrm = fun key_idx =>
       ki.tr, ki.tr, ki.tr, ki.tr, ki.tp,    ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,
                     ki.tp, ki.tp, ki.tp,    ki.hr, ki.hr, ki.hr,
                     ki.tp, ki.hp, ki.hp,    ki.hp, ki.hp, ki.tp, 
-                    ki.xx,
     ]
   } in
 
@@ -53,7 +51,6 @@ let make_hrm = fun key_idx =>
       ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,    ki.tp, ki.tr, ki.tr, ki.tr, ki.tr,
                     ki.hr, ki.hr, ki.hr,    ki.tp, ki.tp, ki.tp,
                     ki.tp, ki.hp, ki.hp,    ki.hp, ki.hp, ki.tp, 
-                    ki.xx,
     ]
   } in
 
@@ -140,14 +137,14 @@ in
 let keymap = {
   virtual_keys = virtual_keys',
   layers = [
-    let base = fun key_idx => (alphas layouts.COLEMAK) |> std.array.at key_idx in
+    let base = fun key_idx => (alphas layouts.QWERTY) |> std.array.at key_idx in
     [
       base 0,  base 1,  base 2,  base 3,  base 4,     base 5,  base 6,  base 7,  base 8,  base 9,
       base 10, base 11, base 12, base 13, base 14,    base 15, base 16, base 17, base 18, base 19,
-                        base 22, base 23, base 24,    base 25, base 26, base 27,
+                        base 20, base 21, base 22,    base 23, base 24, base 25,
                            XXXX, thumb 0, thumb 1,    thumb 2, thumb 3, XXXX,
       # Combo [12, 13]
-      td.make 200 [MO 3, cu.BOOT],
+      # td.make 200 [MO 3, cu.BOOT],
     ],
     L' [
       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       cu.PWSP, cu.CT,   cu.CST,  cu.NWSP, XXXX,
