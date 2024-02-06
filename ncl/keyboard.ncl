@@ -3,6 +3,7 @@ let { CH552T, .. } = import "./fak/mcus.ncl" in
 
 {
   mcu = CH552T,
+  debounce_ms = 10,
   matrix = {
     cols = [32, 14, 15, 16, 17, 12, 13, 35, 34, 33],
     rows = [10, 11, 31, 30]

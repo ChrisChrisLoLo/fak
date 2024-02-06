@@ -126,10 +126,12 @@ let thumb = fun i =>
     key_interrupts = std.array.replicate key_count ki.hr,
   } in
   [
-    kc.DEL & MO 3 & hold.reg.behavior htb_generic,
-    kc.BSPC & MO 5 & hold.reg.behavior htb_generic,
+    kc.TAB & MO 3 & hold.reg.behavior htb_generic,
+    kc.TAB & MO 3 & hold.reg.behavior htb_generic,
     kc.SPC & MO 1 & hold.reg.behavior htb_generic,
-    kc.ESC & MO 4 & hold.reg.behavior htb_generic,
+    kc.BSPC & MO 5 & hold.reg.behavior htb_generic,
+    kc.BSPC & MO 4 & hold.reg.behavior htb_generic,
+    kc.BSPC & MO 4 & hold.reg.behavior htb_generic,
   ]
   |> std.array.at i
 in
@@ -142,7 +144,7 @@ let keymap = {
       base 0,  base 1,  base 2,  base 3,  base 4,     base 5,  base 6,  base 7,  base 8,  base 9,
       base 10, base 11, base 12, base 13, base 14,    base 15, base 16, base 17, base 18, base 19,
                         base 20, base 21, base 22,    base 23, base 24, base 25,
-                           XXXX, thumb 0, thumb 1,    thumb 2, thumb 3, XXXX,
+                        cu.BOOT, thumb 0, thumb 1,    thumb 2, thumb 3, XXXX,
       # Combo [12, 13]
       # td.make 200 [MO 3, cu.BOOT],
     ],
