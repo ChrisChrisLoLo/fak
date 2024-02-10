@@ -27,53 +27,6 @@ let layouts = {
   COLEMAK = "QWFPGJLUYARSTDHNEIOZXCVBKM",
 } in
 
-let make_hrm = fun key_idx =>
-  let htb_hrm_base = fun eager => {
-    timeout_ms = 200,
-    quick_tap_ms = 150,
-    quick_tap_interrupt_ms = 500,
-    global_quick_tap_ms = 80,
-    eager_decision = eager,
-  } in
-
-  let htb_hrm_left = fun eager => htb_hrm_base eager & {
-    key_interrupts = [
-      ki.tp, ki.tp, ki.tp, ki.tp, ki.tp,    ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,
-      ki.tr, ki.tr, ki.tr, ki.tr, ki.tp,    ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,
-                    ki.tp, ki.tp, ki.tp,    ki.hr, ki.hr, ki.hr,
-                    ki.tp, ki.hp, ki.hp,    ki.hp, ki.hp, ki.tp, 
-    ]
-  } in
-
-  let htb_hrm_right = fun eager => htb_hrm_base eager & {
-    key_interrupts = [
-      ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,    ki.tp, ki.tp, ki.tp, ki.tp, ki.tp,
-      ki.hr, ki.hr, ki.hr, ki.hr, ki.hr,    ki.tp, ki.tr, ki.tr, ki.tr, ki.tr,
-                    ki.hr, ki.hr, ki.hr,    ki.tp, ki.tp, ki.tp,
-                    ki.tp, ki.hp, ki.hp,    ki.hp, ki.hp, ki.tp, 
-    ]
-  } in
-
-  let hrm_mods = 
-    let m = [md.lgui, md.lalt, md.lctl, md.lsft] in
-    m @ std.array.reverse m
-  in
-
-  let hrm_key_indices = [10, 11, 12, 13, 16, 17, 18, 19] in
-
-  if std.array.elem key_idx hrm_key_indices then
-    let mod_idx = util.array.index_of key_idx hrm_key_indices in
-    let side = if mod_idx < (std.array.length hrm_mods / 2) then 'left else 'right in
-    let mod = std.array.at mod_idx hrm_mods in
-
-    mod & hold.reg.behavior (
-      (if side == 'left then htb_hrm_left else htb_hrm_right)
-      (if mod == md.lalt then 'none else 'hold)
-    )
-  else
-    {}
-in
-
 let XXXX = tap.none & hold.none in
 
 let L' = fun layer => 
@@ -81,33 +34,11 @@ let L' = fun layer =>
   layer @ filler
 in
 
-let layer_media =
-  let MNP = td.make 200 [ me.NEXT, me.PREV ] in
-  L' [
-    XXXX,    me.MUTE, me.VOLD, me.VOLU, XXXX,       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,
-    XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,
-                      XXXX,    XXXX,    XXXX,       XXXX,    XXXX,    XXXX,
-                      XXXX,    me.PLAY, MNP,        XXXX,    XXXX,    XXXX,
-  ]
-in
-
-let htb_media = {
-  timeout_ms = 250,
-  timeout_decision = 'tap,
-  global_quick_tap_ms = 80,
-  key_interrupts = layer_media
-    |> std.array.map (fun kc => if kc == XXXX then ki.tp else ki.hr)
-} in
 
 let alphas = fun layout => layout
   |> std.string.characters
   |> util.array.enumerate
-  |> std.array.map (fun { index, value } => kc."%{value}"
-      & (if index == 0 then
-          MO 2 & hold.reg.behavior htb_media
-        else 
-          make_hrm index)
-    )
+  |> std.array.map (fun { index, value } => kc."%{value}")
 in
 
 let cu = {
@@ -144,7 +75,7 @@ let keymap = {
       base 0,  base 1,  base 2,  base 3,  base 4,     base 5,  base 6,  base 7,  base 8,  base 9,
       base 10, base 11, base 12, base 13, base 14,    base 15, base 16, base 17, base 18, base 19,
                         base 20, base 21, base 22,    base 23, base 24, base 25,
-                        cu.BOOT, thumb 0, thumb 1,    thumb 2, thumb 3, XXXX,
+                        cu.BOOT, kc.TAB,  kc.SPC,     kc.BSPC, kc.BSPC, kc.ENT,
       # Combo [12, 13]
       # td.make 200 [MO 3, cu.BOOT],
     ],
@@ -154,7 +85,6 @@ let keymap = {
                         XXXX,    XXXX,    XXXX,       kc.HOME, kc.PGDN, kc.PGUP,
                         XXXX,    XXXX,    kc.ENT,     XXXX,    XXXX,    XXXX,
     ],
-    layer_media,
     L' [
       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    kc.N7,   kc.N8,   kc.N9,   XXXX,
       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    kc.N4,   kc.N5,   kc.N6,   XXXX,
