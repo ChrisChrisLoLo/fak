@@ -57,12 +57,12 @@ let thumb = fun i =>
     key_interrupts = std.array.replicate key_count ki.hr,
   } in
   [
-    kc.TAB & MO 3 & hold.reg.behavior htb_generic,
-    kc.TAB & MO 3 & hold.reg.behavior htb_generic,
+    kc.ESC & md.lgui & hold.reg.behavior htb_generic,
+    kc.TAB & md.lctl & hold.reg.behavior htb_generic,
     kc.SPC & MO 1 & hold.reg.behavior htb_generic,
-    kc.BSPC & MO 5 & hold.reg.behavior htb_generic,
-    kc.BSPC & MO 4 & hold.reg.behavior htb_generic,
-    kc.BSPC & MO 4 & hold.reg.behavior htb_generic,
+    XXXX & MO 2 & hold.reg.behavior htb_generic, # Not used
+    kc.BSPC & md.lsft & hold.reg.behavior htb_generic,
+    kc.ENT & md.lalt & hold.reg.behavior htb_generic,
   ]
   |> std.array.at i
 in
@@ -75,33 +75,27 @@ let keymap = {
       base 0,  base 1,  base 2,  base 3,  base 4,     base 5,  base 6,  base 7,  base 8,  base 9,
       base 10, base 11, base 12, base 13, base 14,    base 15, base 16, base 17, base 18, base 19,
                         base 20, base 21, base 22,    base 23, base 24, base 25,
-                        cu.BOOT, kc.TAB,  kc.SPC,     kc.BSPC, kc.BSPC, kc.ENT,
+                        thumb 0, thumb 1,  thumb 2,   MO 2,    thumb 4, thumb 5,
       # Combo [12, 13]
       # td.make 200 [MO 3, cu.BOOT],
     ],
-    L' [
-      XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       cu.PWSP, cu.CT,   cu.CST,  cu.NWSP, XXXX,
-      md.lgui, md.lalt, md.lctl, md.lsft, cu.SCSH,    kc.LEFT, kc.DOWN, kc.UP,   kc.RGHT, XXXX,
-                        XXXX,    XXXX,    XXXX,       kc.HOME, kc.PGDN, kc.PGUP,
-                        XXXX,    XXXX,    kc.ENT,     XXXX,    XXXX,    XXXX,
+    L' [ # lower
+      ks.EXLM, ks.AT,   ks.HASH, ks.DLR,  ks.PERC,    ks.CIRC, ks.AMPR, ks.ASTR, ks.LPRN, ks.RPRN,
+      ks.TILD, ks.UNDS, ks.PLUS, ks.LCBR, ks.RCBR,    XXXX,    XXXX,    XXXX,    XXXX,    ks.DQUO,
+                        ks.PIPE, kc.COMM, kc.DOT,     XXXX,    ks.COLN, kc.SLASH,
+                        XXXX,    XXXX,    XXXX,       MO 3,    XXXX,    XXXX,
     ],
-    L' [
-      XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    kc.N7,   kc.N8,   kc.N9,   XXXX,
-      XXXX,    XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    kc.N4,   kc.N5,   kc.N6,   XXXX,
-                        XXXX,    XXXX,    XXXX,       kc.N1,   kc.N2,   kc.N3,
-                        XXXX,    XXXX,    XXXX,       kc.N0,   kc.".",   XXXX,
+    L' [ # raise
+      kc.N0,   kc.N1,   kc.N2,   kc.N3,   kc.N4,      kc.N5,   kc.N6,   kc.N7,   kc.N8,   kc.N9,
+      kc.GRV,  kc.MINS, kc.EQL,  kc.LBRC, kc.RBRC,    kc.LEFT, kc.DOWN, kc.UP,   kc.RIGHT,kc.QUOT,
+                        kc.BSLS, ks.LABK, ks.RABK,    XXXX,    kc.SCLN, ks.QUES,
+                        XXXX,    XXXX,    MO 3,       XXXX,    XXXX,   XXXX,
     ],
-    L' [
-      XXXX,    XXXX,    XXXX,    kc.F11,  XXXX,       XXXX,    kc.F12,  XXXX,    XXXX,    XXXX,
-      kc.F7,   kc.F5,   kc.F3,   kc.F1,   XXXX,       kc.F8,   kc.F10,  kc.F2,   kc.F4,   kc.F6,
+    L' [ # lower + raise
+      cu.BOOT, XXXX,    XXXX,    XXXX,    XXXX,       XXXX,    XXXX,    XXXX,    XXXX,    XXXX,
+      kc.F1,   kc.F2,   kc.F3,   kc.F4,   kc.F5,      kc.F6,   XXXX,    XXXX,    XXXX,    XXXX,
+                        kc.F7,   kc.F8,   kc.F9,      kc.F10,   kc.F11,   kc.F12,
                         XXXX,    XXXX,    XXXX,       XXXX,    XXXX,    XXXX,
-                        XXXX,    XXXX,    XXXX,       XXXX,    XXXX,    XXXX,
-    ],
-    L' [
-      ks.CIRC, ks.DLR,  ks.TILD, ks.PIPE, ks.PERC,    ks.AMPR, ks.ASTR, kc.SLSH, ks.HASH, ks.AT,
-      ks.DQUO, kc.LBRC, ks.LCBR, ks.LPRN, ks.LABK,    kc.GRV,  ks.UNDS, kc.EQL,  ks.COLN, kc.QUOT,
-                        ks.RCBR, ks.RPRN, ks.RABK,    ks.QUES, ks.PLUS, kc.SCLN,
-                           XXXX,    XXXX,    XXXX,    XXXX,    XXXX,    XXXX,
     ],
   ]
 } in
