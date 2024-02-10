@@ -86,7 +86,7 @@ let keymap = {
                         XXXX,    XXXX,    XXXX,       MO 3,    XXXX,    XXXX,
     ],
     L' [ # raise
-      kc.N0,   kc.N1,   kc.N2,   kc.N3,   kc.N4,      kc.N5,   kc.N6,   kc.N7,   kc.N8,   kc.N9,
+      kc.N1,   kc.N2,   kc.N3,   kc.N4,   kc.N5,      kc.N6,   kc.N7,   kc.N8,   kc.N9,   kc.N0,
       kc.GRV,  kc.MINS, kc.EQL,  kc.LBRC, kc.RBRC,    kc.LEFT, kc.DOWN, kc.UP,   kc.RIGHT,kc.QUOT,
                         kc.BSLS, ks.LABK, ks.RABK,    XXXX,    kc.SCLN, ks.QUES,
                         XXXX,    XXXX,    MO 3,       XXXX,    XXXX,   XXXX,
