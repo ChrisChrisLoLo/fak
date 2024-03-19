@@ -5,7 +5,8 @@ let { CH552T, .. } = import "./fak/mcus.ncl" in
   mcu = CH552T,
   debounce_ms = 7, # very important setting given that we're working with GT SMD switches
   matrix = {
-    cols = [32, 14, 15, 16, 17, 12, 13, 35, 34, 33],
+    # cols = [32, 14, 15, 16, 17, 12, 13, 35, 34, 33],
+    cols = [33, 34, 35, 13, 12, 17, 16, 15, 14, 32],
     rows = [10, 11, 31, 30]
   },
   usb_dev = {
